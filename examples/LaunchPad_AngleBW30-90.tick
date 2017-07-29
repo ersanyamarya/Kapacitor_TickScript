@@ -1,0 +1,44 @@
+var db = 'dataghost'
+var rp = 'a_year'
+var measurement = 'launchpad_downsampled'
+
+var name = 'LaunchPad_AngleBW30-90'
+
+var idVar = name + ':{{.Group}}'
+
+var message = ' {{.Name}} Alert
+ Tilt angle: {{ index .Fields "value" }}'
+
+var outputDB = 'meta'
+var outputRP = 'autogen'
+var outputMeasurement = 'alerts'
+
+var triggerType = 'threshold'
+
+var lower = 30
+var upper = 90
+
+var data = stream
+    |from()
+        .database(db)
+        .retentionPolicy(rp)
+        .measurement(measurement)
+    |eval(lambda: "max_Tilt_Angle")
+        .as('value')
+
+var trigger = data
+    |alert()
+        .crit(lambda: "value" >= lower AND "value" <= upper)
+        .stateChangesOnly()
+        .message(message)
+        .id(idVar)
+        .telegram()
+
+trigger
+    |influxDBOut()
+        .create()
+        .database(outputDB)
+        .retentionPolicy(outputRP)
+        .measurement(outputMeasurement)
+        .tag('alertName', name)
+        .tag('triggerType', triggerType)

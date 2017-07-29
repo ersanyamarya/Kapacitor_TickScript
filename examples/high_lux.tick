@@ -1,0 +1,10 @@
+batch
+  |query('''SELECT * FROM "mydb"."one_hour"."sensortag"''')
+    .period(1s)
+    .every(1s)
+  |alert()
+    .crit(lambda:"lux" > 50)
+    .log('/home/pi/Project/log.txt')
+    .message('Critical: {{ .Name }}: lux:{{ index .Fields "lux" }}')
+    .telegram()
+      .chatId('139284611')

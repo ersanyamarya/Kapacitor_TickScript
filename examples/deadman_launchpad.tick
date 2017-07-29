@@ -1,0 +1,32 @@
+var db = 'dataghost'
+var rp = 'two_hours'
+var measurement = 'launchpad'
+
+var name = 'deadman_launchpad'
+var idVar = name + ':{{.Group}}'
+
+var outputDB = 'meta'
+var outputRP = 'autogen'
+var outputMeasurement = 'alerts'
+
+var triggerType = 'deadman'
+
+var data = stream
+    |from()
+        .database(db)
+        .retentionPolicy(rp)
+        .measurement(measurement)
+
+var trigger = data
+    |deadman(0.0, 1m)
+      .message('launchpad is a deadman')
+      .telegram()
+
+trigger
+    |influxDBOut()
+        .create()
+        .database(outputDB)
+        .retentionPolicy(outputRP)
+        .measurement(outputMeasurement)
+        .tag('alertName', name)
+        .tag('triggerType', triggerType)

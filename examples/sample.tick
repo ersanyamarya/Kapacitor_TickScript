@@ -1,0 +1,20 @@
+var db = 'telegraf'
+var rp = 'autogen'
+var measurement = 'processes'
+
+var name = 'sample'
+var idVar = name + ':{{.Group}}'
+
+var data = stream
+    |from()
+        .database(db)
+        .retentionPolicy(rp)
+        .measurement(measurement)
+data
+    |alert()
+        .crit(lambda: "total_threads" >770)
+        .message('{"measurement":"{{.Name}}"}')
+        .id(idVar)
+        //.telegram()
+        //  .chatId('139284611')
+        .post('http://localhost:3000/data/cool')

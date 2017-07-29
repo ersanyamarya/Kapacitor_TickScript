@@ -1,0 +1,54 @@
+var db = 'dataghost'
+var rp = 'two_hours'
+var measurement = 'launchpad'
+
+var name = 'LaunchPad_NetworkGT2'
+var idVar = name + ':{{.Group}}'
+
+var message = 'Alert: Network Change > 2%
+Read at:  {{.Name}}
+Network Strength:  {{ index .Fields "value" }}'
+
+var outputDB = 'meta'
+var outputRP = 'autogen'
+var outputMeasurement = 'alerts'
+
+var triggerType = 'relative'
+
+var shift = 5m
+var crit = 2
+
+var data = stream
+    |from()
+        .database(db)
+        .retentionPolicy(rp)
+        .measurement(measurement)
+    |eval(lambda: "Network_Strength")
+        .as('value')
+
+var past = data
+    |shift(shift)
+
+var current = data
+
+var trigger = past
+    |join(current)
+        .as('past', 'current')
+    |eval(lambda: abs(float("current.value" - "past.value")) / float("past.value") * 100.0)
+        .keep()
+        .as('value')
+    |alert()
+        .crit(lambda: "value" > crit)
+        .stateChangesOnly()
+        .message(message)
+        .id(idVar)
+        .telegram()
+
+trigger
+    |influxDBOut()
+        .create()
+        .database(outputDB)
+        .retentionPolicy(outputRP)
+        .measurement(outputMeasurement)
+        .tag('alertName', name)
+        .tag('triggerType', triggerType)

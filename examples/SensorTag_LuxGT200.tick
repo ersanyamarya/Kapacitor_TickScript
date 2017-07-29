@@ -1,0 +1,41 @@
+var db = 'dataghost'
+var rp = 'two_hours'
+var measurement = 'sensortag'
+var name = 'SensorTag_LuxGT200'
+var idVar = name + ':{{.Group}}'
+
+var message = 'Alert: Extra Brightness
+Read at: {{.Name}}
+Lux: {{ index .Fields "value" }}'
+
+var outputDB = 'meta'
+var outputRP = 'autogen'
+var outputMeasurement = 'alerts'
+var triggerType = 'threshold'
+
+var crit = 200
+
+var data = stream
+    |from()
+        .database(db)
+        .retentionPolicy(rp)
+        .measurement(measurement)
+    |eval(lambda: "lux")
+        .as('value')
+
+var trigger = data
+    |alert()
+        .crit(lambda: "value" > crit)
+        .stateChangesOnly()
+        .message(message)
+        .id(idVar)
+        .telegram()
+
+trigger
+    |influxDBOut()
+        .create()
+        .database(outputDB)
+        .retentionPolicy(outputRP)
+        .measurement(outputMeasurement)
+        .tag('alertName', name)
+        .tag('triggerType', triggerType)

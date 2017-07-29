@@ -1,0 +1,44 @@
+var db = 'dataghost'
+var rp = 'a_year'
+var measurement = 'sensortag_downsampled'
+
+var name = 'SensorTag_LuxBW400-1800'
+var idVar = name + ':{{.Group}}'
+
+var message = 'Most frequent lux is in between 400 and 1800
+Read at:  {{.Name}}
+frequent_lux:  {{ index .Fields "value" }}'
+
+var outputDB = 'meta'
+var outputRP = 'autogen'
+var outputMeasurement = 'alerts'
+
+var triggerType = 'threshold'
+
+var lower = 400
+var upper = 1800
+
+var data = stream
+    |from()
+        .database(db)
+        .retentionPolicy(rp)
+        .measurement(measurement)
+    |eval(lambda: "frequent_lux")
+        .as('value')
+
+var trigger = data
+    |alert()
+        .crit(lambda: "value" >= lower AND "value" <= upper)
+        .stateChangesOnly()
+        .message(message)
+        .id(idVar)
+        .telegram()
+
+trigger
+    |influxDBOut()
+        .create()
+        .database(outputDB)
+        .retentionPolicy(outputRP)
+        .measurement(outputMeasurement)
+        .tag('alertName', name)
+        .tag('triggerType', triggerType)
