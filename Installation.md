@@ -1,11 +1,9 @@
 # Installation
 
-Requirements
-
+#### Requirements
 Installation of the InfluxDB package may require root or administrator privileges in order to complete successfully.
 #### Networking
 Kapacitor listens on TCP port 9092 for all API and write calls.
-
 Kapacitor may also bind to randomized UDP ports for handling of InfluxDB data via subscriptions.
 
 #### Installation
