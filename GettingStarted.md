@@ -25,12 +25,14 @@ Stream eg: -
     	.every(1s)
 ```
 * Manupulating the data 
+
 eg: -
 ```
 var past = data
     	|shift(shift)
 ```
 * Performing joins or other operations
+
 eg: -
 
 ```
@@ -42,6 +44,7 @@ var trigger = past
 	* defining the Lambda function
 	* defining the message
 	* declearing the output node
+	
 eg: -
 ```
 |alert()
