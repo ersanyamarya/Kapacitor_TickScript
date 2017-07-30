@@ -1,7 +1,7 @@
+[![logosmallestd](https://user-images.githubusercontent.com/28115284/28752842-881291c0-7546-11e7-9277-bd89186ca933.png)](https://github.com/ersanyamarya)
+
 # Kapacitor_TickScript
-***
-got to the [wiki](https://github.com/ersanyamarya/Kapacitor_TickScript/wiki) for more information
-***
+
 ### TICKscript Language
 Kapacitor is a data processing engine. It can process both stream and batch data. This guide will walk you through both workflows and teach you the basics of using and running a Kapacitor daemon.
 
@@ -36,3 +36,7 @@ stream
         .tag('kapacitor', 'true')
         .tag('version', '0.2')
 ```
+***
+go to the [wiki](https://github.com/ersanyamarya/Kapacitor_TickScript/wiki) for more information
+***
+
