@@ -2,12 +2,12 @@
 
 #### Writing the Tick Script
 
-* create a file with the task name followed by ".tick"
+* **create a file with the task name followed by ".tick"**
 `eg: sample_task.tick `
-* save the file
+* **save the file**
 
 #### Parts of Tick Script
-* Reading the data
+* **Reading the data**
 
 Batch eg: -
 ```
@@ -24,14 +24,14 @@ Stream eg: -
     	.period(1s)
     	.every(1s)
 ```
-* Manupulating the data 
+* **Manupulating the data** 
 
 eg: -
 ```
 var past = data
     	|shift(shift)
 ```
-* Performing joins or other operations
+* **Performing joins or other operations**
 
 eg: -
 
@@ -40,7 +40,7 @@ var trigger = past
 	|join(data)
 	.as('past', 'current')
 ```
-* Generating alerts
+* **Generating alerts**
 	* defining the Lambda function
 	* defining the message
 	* declearing the output node
@@ -54,7 +54,7 @@ eg: -
         .id(idVar)
         .telegram()
 ```
-* Generating Triggers
+* **Generating Triggers**
 	* saving alerts to database
 ```
 trigger
@@ -67,14 +67,14 @@ trigger
         .tag('triggerType', triggerType)
 ```
 #### Adding task with the Tick Script
-Type thin in the CLI
+Type this in the CLI
 ```
 kapacitor define  <task name> 
 -type <stream/batch> 
 -tick <tick script> 
 -dbrp <database>.<retention policy>
 ```
-See the list of tasks : `kapacitor list tasks`
+**See the list of tasks :** `kapacitor list tasks`
 
-To enable a tasks : `kapacitor enable <task name>`
-
+**To enable a tasks :** `kapacitor enable <task name>`
+ 

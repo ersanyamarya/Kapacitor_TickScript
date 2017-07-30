@@ -20,22 +20,22 @@ The instructions below are based on the [official documentation](https://docs.in
 * First, configure the package sources.
 * Make sure you’ve previously used sudo in the current session, so that the sudo in the command below does not prompt you for a password again. To make sure, you can just run “sudo ls” and check that it doesn’t prompt for a password.
 
-copy + pase + run this :
+**copy + pase + run this :**
 
 	curl -sL https://repos.influxdata.com/influxdb.key | sudo apt-key add -	
 	source /etc/lsb-release 
 	echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
 
-run :
+**run :**
 
 	sudo apt-get update && sudo apt-get install influxdb &&  sudo apt-get install kapacitor
 You can also download InfluxDB and Kapacitor from [here](https://portal.influxdata.com/downloads), but I would recomend to use the above method.
 #### Linux - SysV or Upstart Systems
-To start the Kapacitor service, run:
+**To start the Kapacitor service, run:**
 
 	sudo service kapacitor start
 #### Linux - systemd Systems
 
-To start the Kapacitor service, run:
+**To start the Kapacitor service, run:**
 
 	sudo systemctl start kapacitor
