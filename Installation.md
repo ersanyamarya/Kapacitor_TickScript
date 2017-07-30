@@ -29,7 +29,7 @@ copy + pase + run this :
 run :
 
 	sudo apt-get update && sudo apt-get install influxdb &&  sudo apt-get install kapacitor
-You can also download InfluxDB and Kapacitor from [here](https://portal.influxdata.com/downloads), but I woul recomend to use the above method.
+You can also download InfluxDB and Kapacitor from [here](https://portal.influxdata.com/downloads), but I would recomend to use the above method.
 #### Linux - SysV or Upstart Systems
 To start the Kapacitor service, run:
 
