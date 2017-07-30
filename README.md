@@ -1,4 +1,7 @@
 # Kapacitor_TickScript
+***
+got to the [wiki](https://github.com/ersanyamarya/Kapacitor_TickScript/wiki) for more information
+***
 ### TICKscript Language
 Kapacitor is a data processing engine. It can process both stream and batch data. This guide will walk you through both workflows and teach you the basics of using and running a Kapacitor daemon.
 

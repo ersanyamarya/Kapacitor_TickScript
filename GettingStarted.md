@@ -5,7 +5,7 @@
 * **create a file with the task name followed by ".tick"**
 `eg: sample_task.tick `
 * **save the file**
-
+***
 #### Parts of Tick Script
 * **Reading the data**
 
@@ -67,6 +67,7 @@ trigger
         .tag('triggerType', triggerType)
 ```
 #### Adding task with the Tick Script
+
 Type this in the CLI
 ```
 kapacitor define  <task name> 
